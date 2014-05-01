@@ -24,11 +24,20 @@
         padding: 1em;
         display: none;
       }
+      #playback {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: rgba(255,0,0,.5);
+        width: 0;
+      }
     </style>
   </head>
   <body>
     <video></video>
     <pre id="log"></pre>
+    <div id="playback"></div>
     <script>
       function log () {
         document.querySelector('#log').innerHTML += Date.now() + ' ' + Array.prototype.join.call(arguments, ', ') + '\n';
@@ -48,6 +57,7 @@
         },
         'PLAYING': {
           'pause': ['PLAYING', play],
+          'timeupdate': ['PLAYING', playback],
           'ended': ['DONE', done],
           'error': ['DONE', done]
         },
@@ -67,11 +77,12 @@
 
       function handle(e) {
         if (e.type in map[state]) {
-          log('saw handleable event ', e.type);
           var transition = map[state][e.type];
           transition[1]();
-          state = transition[0];
-          log('moved to ' + state);
+          if (state !== transition[0]) {
+            log('moved from ' + state + ' to ' + transition[0] + ' because of ' + e.type);
+            state = transition[0];
+          }
         } else {
           log('saw unhandled event ', e.type);
         }
@@ -79,6 +90,10 @@
 
       function play() {
         video.play();
+      }
+
+      function playback() {
+        document.querySelector('#playback').style.width = (video.currentTime / video.duration) * 100 + '%';
       }
 
       function done() {
