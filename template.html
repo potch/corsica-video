@@ -45,6 +45,7 @@
       }
       log('Hello, World!');
       var video = document.querySelector('video');
+      video.loop = false;
       var src = "{{ url }}";
 
       var events = ["abort", "canplay", "canplaythrough", "durationchange", "emptied", "ended", "error", "loadeddata", "loadedmetadata", "loadstart", "mozaudioavailable", "pause", "play", "playing", "progress", "ratechange", "seeked", "seeking", "stalled", "suspend", "timeupdate", "volumechange", "waiting"];
