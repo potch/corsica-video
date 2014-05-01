@@ -1,0 +1,25 @@
+{
+  "name": "corsica-video",
+  "version": "0.2.1",
+  "description": "Video formatting plugin for Corsica",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/potch/corsica-video.git"
+  },
+  "keywords": [
+    "corsica"
+  ],
+  "author": "potch",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/potch/corsica-video/issues"
+  },
+  "dependencies": {
+    "es6-promise": "~0.1.1",
+    "request": "^2.34.0"
+  }
+}

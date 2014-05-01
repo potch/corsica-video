@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <title>Scratch</title>
+    <style>
+      video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        background: #000;
+      }
+      #log {
+        position: absolute;
+        background: #000;
+        color: #fff;
+        bottom: 0;
+        left: 0;
+        padding: 1em;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <video></video>
+    <pre id="log"></pre>
+    <script>
+      function log () {
+        document.querySelector('#log').innerHTML += Date.now() + ' ' + Array.prototype.join.call(arguments, ', ') + '\n';
+        console.log.apply(console, [Date.now()].concat(Array.prototype.slice.apply(arguments)));
+      }
+      log('Hello, World!');
+      var video = document.querySelector('video');
+      var src = "{{ url }}";
+
+      var events = ["abort", "canplay", "canplaythrough", "durationchange", "emptied", "ended", "error", "loadeddata", "loadedmetadata", "loadstart", "mozaudioavailable", "pause", "play", "playing", "progress", "ratechange", "seeked", "seeking", "stalled", "suspend", "timeupdate", "volumechange", "waiting"];
+
+      var map = {
+        'UNPLAYED': {
+          'canplay': ['PLAYING', play],
+          'error': ['DONE', done],
+          'suspend': ['PLAYING', play]
+        },
+        'PLAYING': {
+          'pause': ['PLAYING', play],
+          'ended': ['DONE', done],
+          'error': ['DONE', done]
+        },
+        'DONE': {}
+      }
+      var state = 'UNPLAYED';
+
+      function transmit(name, args) {
+        if ('parent' in window) {
+          window.parent.postMessage({
+            'corsica': true,
+            'message': name,
+            'args': args
+          }, '*');
+        }
+      }
+
+      function handle(e) {
+        if (e.type in map[state]) {
+          log('saw handleable event ', e.type);
+          var transition = map[state][e.type];
+          transition[1]();
+          state = transition[0];
+          log('moved to ' + state);
+        } else {
+          log('saw unhandled event ', e.type);
+        }
+      }
+
+      function play() {
+        video.play();
+      }
+
+      function done() {
+        transmit('timer.start');
+      }
+
+      window.addEventListener('load', function () {
+        transmit('timer.stop');
+        video.src = src;
+      });
+
+      events.forEach(function (e) {
+        video.addEventListener(e, handle);
+      });
+    </script>
+  </body>
+</html>
