@@ -1,6 +1,6 @@
 {
   "name": "corsica-video",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Video formatting plugin for Corsica",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,6 @@
     "url": "https://github.com/potch/corsica-video/issues"
   },
   "dependencies": {
-    "es6-promise": "~0.1.1",
-    "request": "^2.34.0"
+    "es6-promise": "~0.1.1"
   }
 }
