@@ -1,6 +1,6 @@
 {
   "name": "corsica-video",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Video formatting plugin for Corsica",
   "main": "index.js",
   "scripts": {
