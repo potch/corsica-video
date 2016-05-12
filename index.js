@@ -22,7 +22,7 @@ module.exports = function (corsica) {
       return content;
     }
 
-    if (content._args.indexOf('gifv') >= 0) {
+    if (content._args && content._args.indexOf('gifv') >= 0) {
       content.type = 'html';
       content.content = '<video style="position:absolute;top:0;left:0;background:#000;width:100%;height:100%;object-fit:contain;" src="{{URL}}" autoplay loop></video>';
       content.content.replace('{{URL}}', content.url);
