@@ -1,10 +1,10 @@
 {
   "name": "corsica-video",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Video formatting plugin for Corsica",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "open http://i.imgur.com/W2lFqz7.gifv"
   },
   "repository": {
     "type": "git",

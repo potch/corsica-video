@@ -22,6 +22,13 @@ module.exports = function (corsica) {
       return content;
     }
 
+    // rewrite *.gifv urls to leverage the content rewrite block ahead
+    if (content.url.endsWith('.gifv')) {
+      content.url = u.slice(0, -4).concat('mp4');
+      content._args.push('gifv');
+    }
+
+    // gifv argument indicates video should play like a gif
     if (content._args && content._args.indexOf('gifv') >= 0) {
       content.type = 'html';
       content.content = '<video style="position:absolute;top:0;left:0;background:#000;width:100%;height:100%;object-fit:contain;" src="{{URL}}" autoplay loop></video>';
