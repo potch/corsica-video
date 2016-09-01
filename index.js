@@ -24,7 +24,7 @@ module.exports = function (corsica) {
 
     // rewrite *.gifv urls to leverage the content rewrite block ahead
     if (content.url.endsWith('.gifv')) {
-      content.url = u.slice(0, -4).concat('mp4');
+      content.url = content.url.slice(0, -4).concat('mp4');
       content._args.push('gifv');
     }
 
